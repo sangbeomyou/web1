@@ -1,29 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Demo</title>
-</head>
-<body>
-    <label for="selfie">Take a picture of your face:</label>
-    <input type="file" id="selfie" name="selfie" accept="image/*" capture="user" />
+<label for="selfie">Take a picture of your face:</label>
+<input type="file" id="selfie" name="selfie" accept="image/*" capture="user" onchange="alertUser()">
 
-    <script>
-        document.getElementById('selfie').addEventListener('click', function() {
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } })
-                .then(function(stream) {
-                    // Handle the stream, for example show it in a video element
-                    console.log('Accessing the front camera.');
-                })
-                .catch(function(error) {
-                    console.error('Error accessing the camera', error);
-                });
-            } else {
-                alert('Sorry, your browser does not support the Media Capture API');
-            }
-        });
-    </script>
-</body>
-</html>
+<script>
+function alertUser() {
+    alert("Please select the front camera (selfie mode) from the options if available.");
+}
+</script>
