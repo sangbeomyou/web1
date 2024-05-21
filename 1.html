@@ -1,8 +1,3 @@
 <label for="selfie">Take a picture of your face:</label>
-<input type="file" id="selfie" name="selfie" accept="image/*" capture="user" onchange="alertUser()">
+<input type="file" id="selfie" name="selfie" accept="image/*,text/plain" capture="user" />
 
-<script>
-function alertUser() {
-    alert("Please select the front camera (selfie mode) from the options if available.");
-}
-</script>
