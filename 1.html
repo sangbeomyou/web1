@@ -1,3 +1,73 @@
-<label for="selfie">Take a picture of your face:</label>
-<input type="file" id="selfie" name="selfie" accept="image/*,text/plain" capture="user" />
+<html lang="en"><head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Selfie Capture</title>
+		<style>
+			#videoContainer {
+				margin: 20px auto;
+				width: 300px;
+			}
+			video {
+				width: 100%;
+				border: 2px solid #ccc;
+			}
+			#captureButton {
+				display: block;
+				margin: 10px auto;
+				padding: 10px 20px;
+				font-size: 16px;
+				cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="videoContainer">
+			<video id="videoElement" autoplay="" playsinline="" muted=""></video>
+		</div>
+		<button id="captureButton">Capture Selfie</button>
 
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const videoElement = document.getElementById("videoElement");
+
+				// Request permission to access the camera stream
+				navigator.mediaDevices
+					.getUserMedia({ video: { facingMode: "user" }, audio: true })
+					.then(function (stream) {
+						// Display the camera stream in the video element
+						videoElement.srcObject = stream;
+					})
+					.catch(function (error) {
+						console.error("Error accessing camera:", error);
+					});
+
+				// Function to capture a frame from the video stream
+				function captureSelfie() {
+					// Create a canvas element to draw the video frame
+					const canvas = document.createElement("canvas");
+					canvas.width = videoElement.videoWidth;
+					canvas.height = videoElement.videoHeight;
+
+					// Draw the current frame from the video element onto the canvas
+					const ctx = canvas.getContext("2d");
+					ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+					// Convert the canvas content to a data URL representing the captured image
+					const selfieDataURL = canvas.toDataURL("image/jpeg");
+
+					// Display the captured selfie (for demonstration purposes)
+					const selfieImage = new Image();
+					selfieImage.src = selfieDataURL;
+					document.body.appendChild(selfieImage);
+				}
+
+				// Example usage: Capture selfie when the button is clicked
+				const captureButton = document.getElementById("captureButton");
+				captureButton.addEventListener("click", function () {
+					captureSelfie();
+				});
+			});
+		</script>
+	
+
+</body></html>
